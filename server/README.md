@@ -1,93 +1,94 @@
-# Let Me Ask V2
+# Let Me Ask v2 – Backend
 
-Projeto desenvolvido durante um evento da **Rocketseat** utilizando tecnologias modernas para criação de uma API robusta e eficiente.
+This is the backend API for Let Me Ask v2, a modern web application for creating and managing question rooms with AI-powered answers and audio transcription. Built with Node.js, Fastify, and PostgreSQL, it provides a robust, scalable, and type-safe API for the frontend.
 
-## 🚀 Tecnologias
+## 🚀 Tech Stack
 
-- **Node.js** com TypeScript nativo (experimental strip types)
-- **Fastify** - Framework web rápido e eficiente
-- **PostgreSQL** com extensão **pgvector** para vetores
-- **Drizzle ORM** - Type-safe database operations
-- **Zod** - Schema validation
-- **Docker** - Containerização do banco de dados
-- **Biome** - Linting e formatação de código
+- **Node.js** with native TypeScript (experimental strip types)
+- **Fastify** – High-performance web framework
+- **PostgreSQL** with **pgvector** extension for vector search
+- **Drizzle ORM** – Type-safe database operations
+- **Zod** – Schema validation
+- **Docker** – Database containerization
+- **Biome** – Code linting and formatting
 
-## 🏗️ Arquitetura
+## 🏗️ Architecture
 
-O projeto segue uma arquitetura modular com:
+- Modular separation of routes, schemas, and database connection
+- Schema validation with Zod for type safety
+- Type-safe ORM with Drizzle
+- Centralized environment variable validation
 
-- **Separação de responsabilidades** entre rotas, schemas e conexão com banco
-- **Validação de schemas** com Zod para type safety
-- **ORM type-safe** com Drizzle para operações de banco de dados
-- **Validação de variáveis de ambiente** centralizadas
+## ⚙️ Setup & Configuration
 
-## ⚙️ Setup e Configuração
+### Prerequisites
+- Node.js (with support for `--experimental-strip-types`)
+- Docker & Docker Compose
 
-### Pré-requisitos
-
-- Node.js (versão com suporte a `--experimental-strip-types`)
-- Docker e Docker Compose
-
-### 1. Clone o repositório
+### 1. Clone the repository
 ```bash
-git clone <url-do-repositorio>
-cd server
+git clone <repo-url>
+cd letmeask-v2/server
 ```
 
-### 2. Configure o banco de dados
+### 2. Configure the database
 ```bash
 docker-compose up -d
 ```
 
-### 3. Configure as variáveis de ambiente
-
-Crie um arquivo `.env` na raiz do projeto:
-
+### 3. Configure environment variables
+Create a `.env` file in the project root:
 ```env
 PORT=3333
-DATABASE_URL=postgresql://docker:docker@localhost:5432/agents
+DATABASE_URL=postgresql://docker:docker@localhost:5432/letmeask-v2
+GEMINI_API_KEY=your_google_gemini_api_key
 ```
 
-### 4. Instale as dependências
+### 4. Install dependencies
 ```bash
 npm install
 ```
 
-### 5. Execute as migrações do banco
+### 5. Run database migrations
 ```bash
 npx drizzle-kit migrate
 ```
 
-### 6. (Opcional) Popule o banco com dados de exemplo
+### 6. (Optional) Seed the database
 ```bash
 npm run db:seed
 ```
 
-### 7. Execute o projeto
+### 7. Start the server
+- Development:
+  ```bash
+  npm run dev
+  ```
+- Production:
+  ```bash
+  npm start
+  ```
 
-**Desenvolvimento:**
-```bash
-npm run dev
-```
+The API will be available at [http://localhost:3333](http://localhost:3333).
 
-**Produção:**
-```bash
-npm start
-```
+## 📚 Available Scripts
+- `npm run dev` – Start the server in development mode with hot reload
+- `npm start` – Start the server in production mode
+- `npm run db:seed` – Seed the database with example data
 
-## 📚 Scripts Disponíveis
+## 🌐 API Endpoints
+- `GET /health` – Health check
+- `GET /rooms` – List available rooms
+- `POST /rooms` – Create a new room
+- `GET /rooms/:roomId/questions` – List questions for a room
+- `POST /rooms/:roomId/questions` – Submit a question and get an AI answer
+- `POST /rooms/:roomId/audio` – Upload and transcribe audio for a room
 
-- `npm run dev` - Executa o servidor em modo de desenvolvimento com hot reload
-- `npm start` - Executa o servidor em modo de produção
-- `npm run db:seed` - Popula o banco de dados com dados de exemplo
+## 🗄️ Database
+- PostgreSQL with `pgvector` for vector-based search
+- Tables: `rooms`, `questions`, `audio_chunks`
+- Migrations managed with Drizzle ORM
 
-## 🌐 Endpoints
+## License
 
-A API estará disponível em `http://localhost:3333`
-
-- `GET /health` - Health check da aplicação
-- `GET /rooms` - Lista as salas disponíveis
-
----
-
-Desenvolvido com ❤️ durante o NLW da Rocketseat 
+This project is provided for educational and demonstration purposes. 
